@@ -1,0 +1,7 @@
+.idea
+*.out
+*.txt
+notes.go
+brut.cpp
+solution.cpp
+saved_tests
