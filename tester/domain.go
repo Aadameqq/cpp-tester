@@ -45,6 +45,6 @@ type ITestInputGenerator interface {
 	Generate(index int) string
 }
 
-type IViews interface {
+type IView interface {
 	setTestStatusMessage(msg string)
 }
