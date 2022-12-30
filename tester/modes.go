@@ -9,10 +9,10 @@ type AppToAppMode struct {
 	presenter          IPresenter
 	testInputGenerator ITestInputGenerator
 	useCase            UseCase
-	stats              statistics.StatisticsAppToApp
+	stats              *statistics.StatisticsAppToApp
 }
 
-func ConstructAppToAppMode(presenter IPresenter, testInputGenerator ITestInputGenerator, useCases UseCase, stats statistics.StatisticsAppToApp) AppToAppMode {
+func ConstructAppToAppMode(presenter IPresenter, testInputGenerator ITestInputGenerator, useCases UseCase, stats *statistics.StatisticsAppToApp) AppToAppMode {
 	return AppToAppMode{presenter: presenter, testInputGenerator: testInputGenerator, useCase: useCases, stats: stats}
 }
 

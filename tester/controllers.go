@@ -17,10 +17,10 @@ func ConstructAppToAppController(commands commands.Commands) AppToAppController 
 
 func (controller AppToAppController) RunTestsAppToApp() {
 	testsCount := 240
-	commands := controller.commands
+	cmds := controller.commands
 
-	testExecutor := ConstructTestExecutorImpl(commands)
-	testInputGenerator := ConstructTestInputGeneratorImpl(commands)
+	testExecutor := ConstructTestExecutorImpl(cmds)
+	testInputGenerator := ConstructTestInputGeneratorImpl(cmds)
 
 	views := ConstructView()
 	presenter := ConstructPresenter(views)
@@ -30,9 +30,9 @@ func (controller AppToAppController) RunTestsAppToApp() {
 	stats := statistics.ConstructStatisticsAppToApp()
 	statsViews := statistics.ConstructView()
 	statsPresenters := statistics.ConstructPresenter(statsViews)
-	defer statsPresenters.PresentStatisticsAppToApp(stats, testsCount)
+	defer statsPresenters.PresentStatisticsAppToApp(&stats, testsCount)
 
-	modes := ConstructAppToAppMode(presenter, testInputGenerator, useCases, stats)
+	modes := ConstructAppToAppMode(presenter, testInputGenerator, useCases, &stats)
 
 	modes.RunTests(testsCount, 50*time.Millisecond, 1000*time.Millisecond) //Todo: add config
 }
