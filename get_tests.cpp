@@ -7,7 +7,7 @@ class UtilMethods{
 
     public:
      static int randomNum(int mn,int mx){
-        return (rand()%mx)+mn;
+        return (rand()%(mx-mn+1))+mn;
     }
 
 };
@@ -22,9 +22,7 @@ int main(){
     
     srand(time(NULL)*rnd);
 
-    // Under no circumstances should you edit the lines above //
     // Your code //
-    
 
     int a = UtilMethods::randomNum(1,70);
     int b = UtilMethods::randomNum(a+5,99);
