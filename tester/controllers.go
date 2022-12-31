@@ -34,5 +34,5 @@ func (controller AppToAppController) RunTestsAppToApp() {
 
 	modes := ConstructAppToAppMode(presenter, testInputGenerator, useCases, &stats)
 
-	modes.RunTests(testsCount, 50*time.Millisecond, 1000*time.Millisecond) //Todo: add config
+	modes.RunTests(testsCount, time.Millisecond, 1000*time.Millisecond) //Todo: add config
 }

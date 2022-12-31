@@ -12,5 +12,4 @@ func HandleError(err error) {
 
 		os.Exit(0)
 	}
-
 }
