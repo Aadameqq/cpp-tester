@@ -37,7 +37,7 @@ func (presenter Presenter) PresentCompilationSuccess() {
 		"\nRunning tests"
 
 	presenter.view.setAnimationEndMessage(msg)
-	presenter.waitAfterAnimation() // TODO: will it block mode execution?
+	presenter.waitAfterAnimation()
 }
 
 func (presenter Presenter) getAnimationFrame(animationCharIndex int) string {
