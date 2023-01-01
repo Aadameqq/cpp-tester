@@ -32,4 +32,6 @@ func (testsHandler TestsHandler) Handle() {
 	resultPresenter := testsHandler.testProcessor.process(input, receiveOutput)
 
 	resultPresenter.Present()
+
+	//TODO: should add countStats here?
 }

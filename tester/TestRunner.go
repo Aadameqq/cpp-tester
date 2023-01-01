@@ -2,30 +2,24 @@ package tester
 
 import "context"
 
+type IResultTransmitter interface {
+	TransmitWithTimeout(timeoutCtx context.Context, output string)
+}
+
 type TestRunner struct {
-	testExecutor ITestExecutor
+	testExecutor      ITestExecutor
+	resultTransmitter IResultTransmitter
 }
 
-func ConstructTestRunner(testExecutor ITestExecutor) TestRunner {
-	return TestRunner{testExecutor: testExecutor}
+func ConstructTestRunner(testExecutor ITestExecutor, resultTransmitter IResultTransmitter) TestRunner {
+	return TestRunner{testExecutor: testExecutor, resultTransmitter: resultTransmitter}
 }
 
-func (testRunner TestRunner) RunWithTimeout(test Test, result chan TestResult, programName string) {
+func (testRunner TestRunner) RunWithTimeout(test Test, programName string) {
 	ctx, cancel := context.WithTimeout(context.Background(), test.timeout)
 	defer cancel()
 
-	output := testRunner.testExecutor.Execute(ctx, programName, test.input)
+	output := testRunner.testExecutor.Execute(ctx, programName, test.input) //TODO: maybe remove programName
 
-	testRunner.sendResult(ctx, result, output)
-}
-
-func (testRunner TestRunner) sendResult(ctx context.Context, result chan TestResult, output string) {
-	select {
-	case <-ctx.Done():
-		result <- TestResult{ResultType: TestResultType.Timeout}
-	default:
-		result <- TestResult{ResultType: TestResultType.Success, Output: output}
-	}
-
-	close(result)
+	testRunner.resultTransmitter.TransmitWithTimeout(ctx, output)
 }
