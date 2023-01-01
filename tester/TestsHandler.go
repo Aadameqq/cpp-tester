@@ -1,11 +1,11 @@
 package tester
 
-type ITestInputGenerator interface {
-	Generate() string
+type IInputProvider interface {
+	Provide(index int) string
 }
 
-type ITestOutputGenerator interface {
-	Generate(input string, sendOutput chan string)
+type IOutputProvider interface {
+	Provide(input string, sendOutput chan string)
 }
 
 type ITestProcessor interface {
@@ -17,17 +17,18 @@ type IResultPresenter interface {
 }
 
 type TestsHandler struct {
-	testInputGenerator  ITestInputGenerator
-	testOutputGenerator ITestOutputGenerator
-	testProcessor       ITestProcessor
+	inputProvider  IInputProvider
+	outputProvider IOutputProvider
+	testProcessor  ITestProcessor
 }
 
 func (testsHandler TestsHandler) Handle() {
-	input := testsHandler.testInputGenerator.Generate()
+	index := 1 //TODO: add loop
+	input := testsHandler.inputProvider.Provide(index)
 
 	receiveOutput := make(chan string)
 
-	go testsHandler.testOutputGenerator.Generate(input, receiveOutput)
+	go testsHandler.outputProvider.Provide(input, receiveOutput)
 
 	resultPresenter := testsHandler.testProcessor.process(input, receiveOutput)
 
