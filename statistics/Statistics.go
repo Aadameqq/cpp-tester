@@ -31,21 +31,3 @@ func (stats *Statistics) GetValue() int {
 func (stats *Statistics) IncreaseValue() {
 	stats.value++
 }
-
-type IView interface {
-	ShowStatisticsMessage(msg string)
-}
-type IPresenter interface {
-	PresentStatistics(percentageAsText string, value int)
-}
-
-type StatisticsAppToApp struct { //TODO: does it brake ocd rule?
-	Success         Statistics
-	TimeoutBrut     Statistics
-	TimeoutSolution Statistics
-	WrongAnswer     Statistics
-}
-
-func ConstructStatisticsAppToApp() StatisticsAppToApp {
-	return StatisticsAppToApp{}
-}
