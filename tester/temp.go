@@ -13,7 +13,7 @@ type IPresenter interface {
 	PresentWrongAnswer(index int, brutOutput string, solutionOutput string)
 }
 
-type ITestInputGenerator interface {
+type ITestInputGeneratorTemporary interface {
 	Generate(index int) string
 }
 

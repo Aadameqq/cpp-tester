@@ -7,12 +7,12 @@ import (
 
 type AppToAppMode struct {
 	presenter          IPresenter
-	testInputGenerator ITestInputGenerator
+	testInputGenerator ITestInputGeneratorTemporary
 	useCase            TestRunner
 	stats              *statistics.StatisticsAppToApp
 }
 
-func ConstructAppToAppMode(presenter IPresenter, testInputGenerator ITestInputGenerator, useCases TestRunner, stats *statistics.StatisticsAppToApp) AppToAppMode {
+func ConstructAppToAppMode(presenter IPresenter, testInputGenerator ITestInputGeneratorTemporary, useCases TestRunner, stats *statistics.StatisticsAppToApp) AppToAppMode {
 	return AppToAppMode{presenter: presenter, testInputGenerator: testInputGenerator, useCase: useCases, stats: stats}
 }
 
@@ -23,7 +23,7 @@ func (mode AppToAppMode) RunTests(testsCount int, brutTimeout time.Duration, sol
 }
 
 func (mode AppToAppMode) runTest(index int, brutTimeout time.Duration, solutionTimeout time.Duration) {
-	testInput := mode.testInputGenerator.Generate(index)
+	testInput := mode.testInputGenerator.Generate(index) // u
 
 	brutChannel := make(chan TestResult)
 	solutionChannel := make(chan TestResult)
@@ -31,8 +31,8 @@ func (mode AppToAppMode) runTest(index int, brutTimeout time.Duration, solutionT
 	brutTest := ConstructTest(testInput, brutTimeout)
 	solutionTest := ConstructTest(testInput, solutionTimeout)
 
-	go mode.useCase.Run(brutTest, brutChannel, "brut") //TODO: remove program names
-	go mode.useCase.Run(solutionTest, solutionChannel, "solution")
+	go mode.useCase.RunWithTimeout(brutTest, brutChannel, "brut") //TODO: remove program names
+	go mode.useCase.RunWithTimeout(solutionTest, solutionChannel, "solution")
 
 	brutTestResult := <-brutChannel
 	solutionTestResult := <-solutionChannel
