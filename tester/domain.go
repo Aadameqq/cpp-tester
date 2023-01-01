@@ -1,7 +1,6 @@
 package tester
 
 import (
-	"context"
 	"time"
 )
 
@@ -28,23 +27,4 @@ type Test struct {
 
 func ConstructTest(input string, timeout time.Duration) Test {
 	return Test{input: input, timeout: timeout}
-}
-
-type ITestExecutor interface {
-	Execute(ctx context.Context, programName string, input string) string
-}
-
-type IPresenter interface {
-	PresentTimeoutBrut(index int)
-	PresentTimeoutSolution(index int)
-	PresentSuccess(index int)
-	PresentWrongAnswer(index int, brutOutput string, solutionOutput string)
-}
-
-type ITestInputGenerator interface {
-	Generate(index int) string
-}
-
-type IView interface {
-	setTestStatusMessage(msg string)
 }

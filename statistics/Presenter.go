@@ -2,7 +2,7 @@ package statistics
 
 import (
 	"fmt"
-	"go-checker/utils"
+	"tester-cpp/utils"
 )
 
 type Presenter struct {

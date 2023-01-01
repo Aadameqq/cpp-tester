@@ -1,8 +1,8 @@
 package tester
 
 import (
-	"go-checker/commands"
-	"go-checker/statistics"
+	"tester-cpp/commands"
+	"tester-cpp/statistics"
 	"time"
 )
 
@@ -25,7 +25,7 @@ func (controller AppToAppController) RunTestsAppToApp() {
 	views := ConstructView()
 	presenter := ConstructPresenter(views)
 
-	useCases := ConstructUseCase(testExecutor)
+	useCases := ConstructTestRunner(testExecutor)
 
 	stats := statistics.ConstructStatisticsAppToApp()
 	statsViews := statistics.ConstructView()

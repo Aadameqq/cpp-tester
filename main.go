@@ -1,9 +1,9 @@
 package main
 
 import (
-	"go-checker/commands"
-	"go-checker/compiler"
-	"go-checker/tester"
+	"tester-cpp/commands"
+	"tester-cpp/compiler"
+	"tester-cpp/tester"
 )
 
 func main() {

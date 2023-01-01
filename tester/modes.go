@@ -1,18 +1,18 @@
 package tester
 
 import (
-	"go-checker/statistics"
+	"tester-cpp/statistics"
 	"time"
 )
 
 type AppToAppMode struct {
 	presenter          IPresenter
 	testInputGenerator ITestInputGenerator
-	useCase            UseCase
+	useCase            TestRunner
 	stats              *statistics.StatisticsAppToApp
 }
 
-func ConstructAppToAppMode(presenter IPresenter, testInputGenerator ITestInputGenerator, useCases UseCase, stats *statistics.StatisticsAppToApp) AppToAppMode {
+func ConstructAppToAppMode(presenter IPresenter, testInputGenerator ITestInputGenerator, useCases TestRunner, stats *statistics.StatisticsAppToApp) AppToAppMode {
 	return AppToAppMode{presenter: presenter, testInputGenerator: testInputGenerator, useCase: useCases, stats: stats}
 }
 
@@ -31,8 +31,8 @@ func (mode AppToAppMode) runTest(index int, brutTimeout time.Duration, solutionT
 	brutTest := ConstructTest(testInput, brutTimeout)
 	solutionTest := ConstructTest(testInput, solutionTimeout)
 
-	go mode.useCase.RunTest(brutTest, brutChannel, "brut") //TODO: remove program names
-	go mode.useCase.RunTest(solutionTest, solutionChannel, "solution")
+	go mode.useCase.Run(brutTest, brutChannel, "brut") //TODO: remove program names
+	go mode.useCase.Run(solutionTest, solutionChannel, "solution")
 
 	brutTestResult := <-brutChannel
 	solutionTestResult := <-solutionChannel

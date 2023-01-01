@@ -4,10 +4,10 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"go-checker/commands"
-	"go-checker/utils"
 	"io"
 	"os/exec"
+	"tester-cpp/commands"
+	"tester-cpp/utils"
 )
 
 type TestInputGeneratorImpl struct {

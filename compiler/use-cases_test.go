@@ -1,7 +1,7 @@
 package compiler
 
 import (
-	"go-checker/utils"
+	"tester-cpp/utils"
 	"testing"
 )
 

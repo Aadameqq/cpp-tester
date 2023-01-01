@@ -1,10 +1,10 @@
 package compiler
 
 import (
-	"go-checker/commands"
-	"go-checker/utils"
 	"os/exec"
 	"strings"
+	"tester-cpp/commands"
+	"tester-cpp/utils"
 )
 
 type CompilationRunnerImpl struct {

@@ -1,6 +1,6 @@
 package compiler
 
-import "go-checker/commands"
+import "tester-cpp/commands"
 
 type AppToAppController struct {
 	commands commands.Commands
