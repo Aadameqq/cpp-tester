@@ -5,34 +5,35 @@ type IInputProvider interface {
 }
 
 type IOutputProvider interface {
-	Provide(input string, sendOutput chan string)
+	Provide(input string, sendOutput chan Result)
 }
 
 type ITestProcessor interface {
-	process(input string, receiveOutput chan string) IResultPresenter
+	process(input string, receiveOutput chan Result) Result
 }
 
 type IResultPresenter interface {
-	Present()
+	Present(result Result)
 }
 
 type TestsHandler struct {
-	inputProvider  IInputProvider
-	outputProvider IOutputProvider
-	testProcessor  ITestProcessor
+	inputProvider   IInputProvider
+	outputProvider  IOutputProvider
+	testProcessor   ITestProcessor
+	resultPresenter IResultPresenter
 }
 
 func (testsHandler TestsHandler) Handle() {
 	index := 1 //TODO: add loop
 	input := testsHandler.inputProvider.Provide(index)
 
-	receiveOutput := make(chan string)
+	receiveOutput := make(chan Result)
 
 	go testsHandler.outputProvider.Provide(input, receiveOutput)
 
-	resultPresenter := testsHandler.testProcessor.process(input, receiveOutput)
+	result := testsHandler.testProcessor.process(input, receiveOutput) //TODO: should it be divided into two classes
 
-	resultPresenter.Present()
+	testsHandler.resultPresenter.Present(result)
 
 	//TODO: should add countStats here?
 }

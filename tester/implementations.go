@@ -3,26 +3,11 @@ package tester
 import (
 	"context"
 	"errors"
-	"fmt"
 	"io"
 	"os/exec"
 	"tester-cpp/commands"
 	"tester-cpp/utils"
 )
-
-type TestInputGeneratorImpl struct {
-	commands commands.Commands
-}
-
-func ConstructTestInputGeneratorImpl(commands commands.Commands) TestInputGeneratorImpl {
-	return TestInputGeneratorImpl{commands: commands}
-}
-
-func (testInputGenerator TestInputGeneratorImpl) Generate(index int) string {
-	command := exec.Command(testInputGenerator.commands.Run("get_tests"))
-
-	return passDataToCommandInputAndGetOutput(fmt.Sprintf("%v", index), command)
-}
 
 type TestExecutorImpl struct {
 	commands commands.Commands
