@@ -15,11 +15,11 @@ func ConstructTestRunner(testExecutor ITestExecutor, resultTransmitter IResultTr
 	return TestRunner{testExecutor: testExecutor, resultTransmitter: resultTransmitter}
 }
 
-func (testRunner TestRunner) RunWithTimeout(test Test, programName string) {
-	ctx, cancel := context.WithTimeout(context.Background(), test.timeout)
+func (testRunner TestRunner) RunWithTimeout(test UnexecutedTest, programName string) {
+	ctx, cancel := context.WithTimeout(context.Background(), test.GetTimeout())
 	defer cancel()
 
-	output := testRunner.testExecutor.Execute(ctx, programName, test.input) //TODO: maybe remove programName
+	output := testRunner.testExecutor.Execute(ctx, programName, test.GetInput()) //TODO: will it be working properly
 
 	testRunner.resultTransmitter.TransmitWithTimeout(ctx, output)
 }

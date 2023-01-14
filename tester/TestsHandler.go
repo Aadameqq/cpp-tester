@@ -1,39 +1,77 @@
 package tester
 
-type IInputProvider interface {
-	Provide(index int) string
+type IInputGenerator interface {
+	Generate(index int) string
 }
 
-type IOutputProvider interface {
-	Provide(input string, sendOutput chan Result)
+type IProvenOutputGenerator interface {
+	Generate(input string, sendOutput chan Result)
 }
 
-type ITestProcessor interface {
-	process(input string, receiveOutput chan Result) Result
+type ITestedOutputGenerator interface {
+	Generate(input string, sendOutput chan Result) Result
 }
 
-type IResultPresenter interface {
-	Present(result Result)
+type IResultsProcessor interface {
+	Process(firstResult Result, secondResult Result) ResultMessage
+}
+
+type IExecutedTestSaver interface {
+	Save(executedTest ExecutedTest)
+}
+
+type IResultsConverter interface {
+	ToExecutedTest(firstResult Result, secondResult Result, input string) (ExecutedTest, bool)
+}
+
+type IResultMessagePresenter interface {
+	Present(message ResultMessage)
 }
 
 type TestsHandler struct {
-	inputProvider   IInputProvider
-	outputProvider  IOutputProvider
-	testProcessor   ITestProcessor
-	resultPresenter IResultPresenter
+	inputGenerator         IInputGenerator
+	provenOutputGenerator  IProvenOutputGenerator
+	testedOutputGenerator  ITestedOutputGenerator
+	executedTestSaver      IExecutedTestSaver
+	resultsProcessor       IResultsProcessor
+	resultsConverter       IResultsConverter
+	resultMessagePresenter IResultMessagePresenter
 }
 
-func (testsHandler TestsHandler) Handle() {
-	index := 1 //TODO: add loop
-	input := testsHandler.inputProvider.Provide(index)
+func (th TestsHandler) Handle(testsCount int) {
+	for i := 0; i < testsCount; i++ {
+		th.handleSingle(i)
+	}
+}
 
-	receiveOutput := make(chan Result)
+func (th TestsHandler) handleSingle(index int) {
+	input := th.inputGenerator.Generate(index)
+	provenResult, testedResult := th.generateOutputs(input)
+	finalResultMessage := th.processResults(provenResult, testedResult)
+	th.resultMessagePresenter.Present(finalResultMessage)
+	th.save(provenResult, testedResult, input)
+}
 
-	go testsHandler.outputProvider.Provide(input, receiveOutput)
+func (th TestsHandler) processResults(provenResult Result, testedResult Result) ResultMessage {
+	return th.resultsProcessor.Process(provenResult, testedResult)
+}
 
-	result := testsHandler.testProcessor.process(input, receiveOutput) //TODO: should it be divided into two classes
+func (th TestsHandler) save(provenResult Result, testedResult Result, input string) {
+	executedTest, isError := th.resultsConverter.ToExecutedTest(provenResult, testedResult, input)
+	if !isError {
+		go th.executedTestSaver.Save(executedTest)
+	}
+}
 
-	testsHandler.resultPresenter.Present(result)
+func (th TestsHandler) generateOutputs(input string) (Result, Result) {
+	receiveProvenResult := make(chan Result)
+	receiveTestedResult := make(chan Result)
 
-	//TODO: should add countStats here?
+	go th.provenOutputGenerator.Generate(input, receiveProvenResult)
+	go th.testedOutputGenerator.Generate(input, receiveTestedResult)
+
+	provenResult := <-receiveProvenResult
+	testedResult := <-receiveTestedResult
+
+	return provenResult, testedResult
 }

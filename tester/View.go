@@ -9,6 +9,6 @@ func ConstructView() View {
 	return View{}
 }
 
-func (view View) setTestStatusMessage(msg string) {
+func (view View) SetTestResultMessage(msg string) {
 	fmt.Println(msg)
 }

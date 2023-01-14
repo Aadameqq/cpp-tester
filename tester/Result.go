@@ -2,61 +2,48 @@ package tester
 
 type IResultError interface {
 	GetName() string
-	GetMessage() string
-	GetColour() string
-}
-
-type NoneResultError struct {
-}
-
-func (err NoneResultError) GetColour() string {
-	return ""
-}
-
-func (err NoneResultError) GetName() string {
-	return "none"
-}
-
-func (err NoneResultError) GetMessage() string {
-	return "None"
+	GetMessage() ResultMessage
 }
 
 type Result struct {
-	resultError  IResultError
-	payload      string
-	isSuccessful bool
+	error     IResultError
+	payload   string
+	isSuccess bool
 }
 
 func ConstructResultWithError(resultError IResultError) Result {
-	return Result{resultError: resultError}
+	return Result{error: resultError}
 }
 
 func ConstructResultWithSuccess(payload string) Result {
-	return Result{isSuccessful: true, payload: payload}
+	return Result{isSuccess: true, payload: payload}
 }
 
-func (result *Result) IsSuccessful() bool {
-	return result.isSuccessful
+func (result *Result) IsSuccess() bool {
+	return result.isSuccess
 }
 
-func (result *Result) GetPayloadIfSuccessful() *string {
-	if result.IsSuccessful() {
-		return &result.payload
+func (result *Result) GetPayloadIfSuccess() (payload string, conditionsMet bool) {
+	if result.IsSuccess() {
+		return result.payload, true
 	}
-	return nil
+	return "", false
 }
 
 func (result *Result) IsError() bool {
-	return result.resultError.GetName() != NoneResultError{}.GetName()
+	return result.error == nil
 }
 
-func (result *Result) IsErrorType(resultType IResultError) bool {
-	return result.resultError.GetName() == resultType.GetName()
-}
-
-func (result *Result) GetErrorIfIsError() *IResultError {
-	if result.IsError() {
-		return &result.resultError
+func (result *Result) IsErrorInstanceOf(resultError IResultError) bool {
+	if !result.IsError() {
+		return false
 	}
-	return nil
+	return result.error.GetName() == resultError.GetName()
+}
+
+func (result *Result) GetErrorIfError() (resultError IResultError, conditionsMet bool) {
+	if result.IsError() {
+		return result.error, true
+	}
+	return nil, false
 }
