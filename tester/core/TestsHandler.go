@@ -6,7 +6,6 @@ type TestsHandler struct {
 	testedOutputGenerator  TestedOutputGenerator
 	executedTestSaver      ExecutedTestSaver
 	resultsProcessor       ResultsProcessor
-	resultsConverter       ResultsConverter
 	resultMessagePresenter ResultMessagePresenter
 }
 
@@ -29,7 +28,8 @@ func (th TestsHandler) processResults(provenResult Result, testedResult Result) 
 }
 
 func (th TestsHandler) save(provenResult Result, testedResult Result, input string) {
-	executedTest, isError := th.resultsConverter.ToExecutedTest(provenResult, testedResult, input) //TODO: do i really need to inject it?
+	resultsConverter := ConstructResultsConverter()
+	executedTest, isError := resultsConverter.ToExecutedTest(provenResult, testedResult, input) //TODO: do i really need to inject it?
 	if !isError {
 		go th.executedTestSaver.Save(executedTest)
 	}
