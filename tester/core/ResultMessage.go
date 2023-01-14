@@ -1,4 +1,4 @@
-package tester
+package tester_core
 
 type ResultMessage struct {
 	content string

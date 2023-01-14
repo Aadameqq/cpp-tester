@@ -1,13 +1,13 @@
-package tester
+package tester_core
 
 import "context"
 
 type ResultTransmitterWithTimeout struct {
 	sendResult         chan Result
-	timeoutResultError IResultError
+	timeoutResultError ResultError
 }
 
-func ConstructResultTransmitterWithTimeout(sendResult chan Result, timeoutResultError IResultError) ResultTransmitterWithTimeout {
+func ConstructResultTransmitterWithTimeout(sendResult chan Result, timeoutResultError ResultError) ResultTransmitterWithTimeout {
 	return ResultTransmitterWithTimeout{sendResult: sendResult, timeoutResultError: timeoutResultError}
 }
 

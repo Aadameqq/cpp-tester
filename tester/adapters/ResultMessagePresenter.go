@@ -1,14 +1,14 @@
-package tester
+package tester_adapters
 
 import (
 	"fmt"
 )
 
 type ResultMessagePresenter struct {
-	view IView
+	view adapters.IView
 }
 
-func ConstructResultMessagePresenter(view IView) ResultMessagePresenter {
+func ConstructResultMessagePresenter(view adapters.IView) ResultMessagePresenter {
 	return ResultMessagePresenter{view: view}
 }
 

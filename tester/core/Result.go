@@ -1,17 +1,12 @@
-package tester
-
-type IResultError interface {
-	GetName() string
-	GetMessage() ResultMessage
-}
+package tester_core
 
 type Result struct {
-	error     IResultError
+	error     ResultError
 	payload   string
 	isSuccess bool
 }
 
-func ConstructResultWithError(resultError IResultError) Result {
+func ConstructResultWithError(resultError ResultError) Result {
 	return Result{error: resultError}
 }
 
@@ -34,14 +29,14 @@ func (result *Result) IsError() bool {
 	return result.error == nil
 }
 
-func (result *Result) IsErrorInstanceOf(resultError IResultError) bool {
+func (result *Result) IsErrorInstanceOf(resultError ResultError) bool {
 	if !result.IsError() {
 		return false
 	}
 	return result.error.GetName() == resultError.GetName()
 }
 
-func (result *Result) GetErrorIfError() (resultError IResultError, conditionsMet bool) {
+func (result *Result) GetErrorIfError() (resultError ResultError, conditionsMet bool) {
 	if result.IsError() {
 		return result.error, true
 	}

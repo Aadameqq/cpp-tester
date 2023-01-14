@@ -1,17 +1,20 @@
-package tester
+package tester_core
 
-import "context"
+import (
+	"context"
+	testerAdapters "tester-cpp/tester/adapters"
+)
 
 type IResultTransmitter interface {
 	TransmitWithTimeout(timeoutCtx context.Context, output string)
 }
 
 type TestRunner struct {
-	testExecutor      ITestExecutor
+	testExecutor      testerAdapters.ITestExecutor
 	resultTransmitter IResultTransmitter
 }
 
-func ConstructTestRunner(testExecutor ITestExecutor, resultTransmitter IResultTransmitter) TestRunner {
+func ConstructTestRunner(testExecutor testerAdapters.ITestExecutor, resultTransmitter IResultTransmitter) TestRunner {
 	return TestRunner{testExecutor: testExecutor, resultTransmitter: resultTransmitter}
 }
 

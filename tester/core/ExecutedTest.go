@@ -1,4 +1,4 @@
-package tester
+package tester_core
 
 type ExecutedTest struct {
 	input        string

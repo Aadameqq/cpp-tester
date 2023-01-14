@@ -1,41 +1,13 @@
-package tester
-
-type IInputGenerator interface {
-	Generate(index int) string
-}
-
-type IProvenOutputGenerator interface {
-	Generate(input string, sendOutput chan Result)
-}
-
-type ITestedOutputGenerator interface {
-	Generate(input string, sendOutput chan Result) Result
-}
-
-type IResultsProcessor interface {
-	Process(firstResult Result, secondResult Result) ResultMessage
-}
-
-type IExecutedTestSaver interface {
-	Save(executedTest ExecutedTest)
-}
-
-type IResultsConverter interface {
-	ToExecutedTest(firstResult Result, secondResult Result, input string) (ExecutedTest, bool)
-}
-
-type IResultMessagePresenter interface {
-	Present(message ResultMessage)
-}
+package tester_core
 
 type TestsHandler struct {
-	inputGenerator         IInputGenerator
-	provenOutputGenerator  IProvenOutputGenerator
-	testedOutputGenerator  ITestedOutputGenerator
-	executedTestSaver      IExecutedTestSaver
-	resultsProcessor       IResultsProcessor
-	resultsConverter       IResultsConverter
-	resultMessagePresenter IResultMessagePresenter
+	inputGenerator         InputGenerator
+	provenOutputGenerator  ProvenOutputGenerator
+	testedOutputGenerator  TestedOutputGenerator
+	executedTestSaver      ExecutedTestSaver
+	resultsProcessor       ResultsProcessor
+	resultsConverter       ResultsConverter
+	resultMessagePresenter ResultMessagePresenter
 }
 
 func (th TestsHandler) Handle(testsCount int) {
@@ -57,7 +29,7 @@ func (th TestsHandler) processResults(provenResult Result, testedResult Result) 
 }
 
 func (th TestsHandler) save(provenResult Result, testedResult Result, input string) {
-	executedTest, isError := th.resultsConverter.ToExecutedTest(provenResult, testedResult, input)
+	executedTest, isError := th.resultsConverter.ToExecutedTest(provenResult, testedResult, input) //TODO: do i really need to inject it?
 	if !isError {
 		go th.executedTestSaver.Save(executedTest)
 	}

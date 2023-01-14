@@ -1,9 +1,10 @@
-package tester
+package tester_adapters
 
 import (
 	"fmt"
 	"os/exec"
 	"tester-cpp/commands"
+	"tester-cpp/tester/adapters"
 )
 
 type InputGenerator struct {
@@ -17,6 +18,6 @@ func ConstructTestInputGeneratorImpl(commands commands.Commands) InputGenerator 
 func (inputGenerator InputGenerator) Generate(index int) string {
 	command := exec.Command(inputGenerator.commands.Run("get_tests"))
 
-	return passDataToCommandInputAndGetOutput(fmt.Sprintf("%v", index), command)
+	return adapters.passDataToCommandInputAndGetOutput(fmt.Sprintf("%v", index), command)
 	// Todo: "passDataToCommandInputAndGetOutput" move this function declaration somewhere else
 }

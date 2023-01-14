@@ -1,4 +1,4 @@
-package tester
+package tester_adapters
 
 import "fmt"
 
