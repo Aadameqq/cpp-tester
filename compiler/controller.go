@@ -1,12 +1,10 @@
 package compiler
 
-import "tester-cpp/commands"
-
 type AppToAppController struct {
-	commands commands.Commands
+	commands core.Commands
 }
 
-func ConstructAppToAppController(commands commands.Commands) AppToAppController {
+func ConstructAppToAppController(commands core.Commands) AppToAppController {
 	return AppToAppController{commands: commands}
 }
 

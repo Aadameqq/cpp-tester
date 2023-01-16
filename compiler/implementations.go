@@ -3,15 +3,14 @@ package compiler
 import (
 	"os/exec"
 	"strings"
-	"tester-cpp/commands"
 	"tester-cpp/utils"
 )
 
 type CompilationRunnerImpl struct {
-	commands commands.Commands
+	commands core.Commands
 }
 
-func ConstructCompilationRunnerImpl(commands commands.Commands) CompilationRunnerImpl {
+func ConstructCompilationRunnerImpl(commands core.Commands) CompilationRunnerImpl {
 	return CompilationRunnerImpl{commands: commands}
 }
 

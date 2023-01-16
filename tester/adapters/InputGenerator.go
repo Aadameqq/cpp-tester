@@ -3,15 +3,13 @@ package tester_adapters
 import (
 	"fmt"
 	"os/exec"
-	"tester-cpp/commands"
-	"tester-cpp/tester/adapters"
 )
 
 type InputGenerator struct {
-	commands commands.Commands
+	commands core.Commands
 }
 
-func ConstructTestInputGeneratorImpl(commands commands.Commands) InputGenerator {
+func ConstructTestInputGeneratorImpl(commands core.Commands) InputGenerator {
 	return InputGenerator{commands: commands}
 }
 

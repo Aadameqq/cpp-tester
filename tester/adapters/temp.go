@@ -5,7 +5,6 @@ import (
 	"errors"
 	"io"
 	"os/exec"
-	"tester-cpp/commands"
 	"tester-cpp/utils"
 )
 
@@ -25,10 +24,10 @@ type IView interface {
 }
 
 type TestExecutorImpl struct {
-	commands commands.Commands
+	commands core.Commands
 }
 
-func ConstructTestExecutorImpl(commands commands.Commands) TestExecutorImpl {
+func ConstructTestExecutorImpl(commands core.Commands) TestExecutorImpl {
 	return TestExecutorImpl{commands: commands}
 }
 

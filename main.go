@@ -1,15 +1,14 @@
 package main
 
 import (
-	"tester-cpp/commands"
 	"tester-cpp/compiler"
 	"tester-cpp/tester"
 )
 
 func main() {
-	compilerController := compiler.ConstructAppToAppController(commands.LinuxCommands)
+	compilerController := compiler.ConstructAppToAppController(implementations.LinuxCommands)
 	compilerController.HandleCompilation()
 
-	testerController := tester.ConstructAppToAppController(commands.LinuxCommands)
+	testerController := tester.ConstructAppToAppController(implementations.LinuxCommands)
 	testerController.RunTestsAppToApp()
 }
