@@ -26,7 +26,7 @@ func (result *Result) GetPayloadIfSuccess() (payload string, conditionsMet bool)
 }
 
 func (result *Result) IsError() bool {
-	return result.error == nil
+	return result.error == ResultError{} //TODO: check if that works
 }
 
 func (result *Result) IsErrorInstanceOf(resultError ResultError) bool {
@@ -40,5 +40,5 @@ func (result *Result) GetErrorIfError() (resultError ResultError, conditionsMet 
 	if result.IsError() {
 		return result.error, true
 	}
-	return nil, false
+	return ResultError{}, false
 }

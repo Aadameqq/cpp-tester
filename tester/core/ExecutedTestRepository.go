@@ -1,5 +1,5 @@
 package tester_core
 
-type ExecutedTestSaver interface {
+type ExecutedTestRepository interface {
 	Save(executedTest ExecutedTest)
 }

@@ -1,6 +1,18 @@
 package tester_core
 
-type ResultError interface {
-	GetName() string
-	GetMessage() ResultMessage
-} //TODO: shouldn't it be an object?
+type ResultError struct {
+	name    string
+	message ResultMessage
+}
+
+func ConstructResultError(name string, message ResultMessage) *ResultError {
+	return &ResultError{name: name, message: message}
+}
+
+func (re ResultError) GetName() string {
+	return re.name
+}
+
+func (re ResultError) GetMessage() ResultMessage {
+	return re.message
+}
