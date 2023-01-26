@@ -5,6 +5,6 @@ import (
 	"tester-cpp/utils"
 )
 
-var message = *testerCore.ConstructResultMessage("Timeout due to proven solution", utils.Colours.Yellow)
+var provenResultErrorMsg = *testerCore.ConstructResultMessage("Timeout due to proven solution", utils.Colours.Yellow)
 
-var ProvenSolutionTimeoutResultError = *testerCore.ConstructResultError("proven-solution-output", message)
+var ProvenSolutionTimeoutResultError = *testerCore.ConstructResultError("proven-solution-output", provenResultErrorMsg)
