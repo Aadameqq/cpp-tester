@@ -1,4 +1,4 @@
-package compiler
+package archive
 
 type UseCase struct {
 	compilationRunner ICompilationRunner

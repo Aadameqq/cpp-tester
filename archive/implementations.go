@@ -1,4 +1,4 @@
-package compiler
+package archive
 
 import (
 	"os/exec"

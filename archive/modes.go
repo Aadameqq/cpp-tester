@@ -1,4 +1,4 @@
-package compiler
+package archive
 
 type AppToAppMode struct {
 	useCase   IUseCase

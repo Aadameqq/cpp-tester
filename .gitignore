@@ -2,6 +2,5 @@
 *.out
 *.txt
 notes.go
-brut.cpp
-solution.cpp
+external_programs
 saved_tests

@@ -1,4 +1,4 @@
-package compiler
+package archive
 
 type AppToAppController struct {
 	commands core.Commands

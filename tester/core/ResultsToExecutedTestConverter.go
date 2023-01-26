@@ -1,13 +1,13 @@
 package tester_core
 
-type TResultsConverter struct {
+type TResultsToExecutedTestConverter struct {
 }
 
-func ConstructResultsConverter() *TResultsConverter {
-	return &TResultsConverter{}
+func ConstructResultsToExecutedTestConverter() *TResultsToExecutedTestConverter {
+	return &TResultsToExecutedTestConverter{}
 }
 
-func (T TResultsConverter) ToExecutedTest(provenResult Result, testedResult Result, input string) (executedTest ExecutedTest, isError bool) {
+func (T TResultsToExecutedTestConverter) Convert(provenResult Result, testedResult Result, input string) (executedTest ExecutedTest, isError bool) {
 	provenOutput, conditionsMet := provenResult.GetPayloadIfSuccess()
 
 	if !conditionsMet {

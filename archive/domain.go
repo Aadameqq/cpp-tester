@@ -1,4 +1,4 @@
-package compiler
+package archive
 
 type ICompilationRunner interface {
 	Run(programName string)
