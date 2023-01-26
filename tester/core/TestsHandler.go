@@ -28,8 +28,8 @@ func (th TestsHandler) processResults(provenResult Result, testedResult Result) 
 }
 
 func (th TestsHandler) save(provenResult Result, testedResult Result, input string) {
-	resultsConverter := ConstructResultsConverter()
-	executedTest, isError := resultsConverter.ToExecutedTest(provenResult, testedResult, input)
+	resultsToExecutedTestConverter := ConstructResultsToExecutedTestConverter()
+	executedTest, isError := resultsToExecutedTestConverter.Convert(provenResult, testedResult, input)
 	if !isError {
 		go th.executedTestRepository.Save(executedTest)
 	}
